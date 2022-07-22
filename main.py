@@ -8,6 +8,7 @@ from exception.data_exceptions import DataSourceError
 app = Flask(__name__)
 
 def create_and_config_app(config_path):
+
     app.config['JSON_AS_ASCII'] = False
     app.config.from_pyfile(config_path)
     app.register_blueprint(main_blueprint)

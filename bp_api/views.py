@@ -14,7 +14,7 @@ comment_dao = CommentDAO(COMMENTS_PATH)
 api_logger = logging.getLogger("api_logger")
 
 
-@api_blueprint.route('/posts/', methods=['GET'])
+@api_blueprint.route('/posts/')
 def api_all_posts_page():
     '''Эндпоинт.Возвращает все посты'''
 
@@ -23,7 +23,7 @@ def api_all_posts_page():
     return jsonify(posts)
 
 
-@api_blueprint.route('/api/posts/<int:id>', methods=['GET'])
+@api_blueprint.route('/api/posts/<int:id>')
 def api_posts_by_id_page(pk):
     '''Эндпоинт.Возвращает один пост'''
     post = post_dao.get_by_pk(pk)

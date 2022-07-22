@@ -4,17 +4,19 @@ from bp_main.dao import post_dao
 from bp_main.dao.post import Post
 from bp_main.dao.post_dao import PostDAO
 
+
 def check_fields(post):
     fields = ["poster_name", "poster_avatar", "pic", "content", "views_count", "likes_count", "pk"]
 
     for field in fields:
         assert hasattr(post, field), f"Нет поля{field}"
 
+
 class TestPostDAO:
 
     @pytest.fixture
     def post_dao(self):
-        post_dao_instance = PostDAO("./bp_main/tests/post_mock.json")
+        post_dao_instance = PostDAO("post_mock.json")
         return post_dao_instance
 
     ### Функция получения всех
@@ -27,9 +29,9 @@ class TestPostDAO:
         post = post_dao.get_all()[0]
         assert type(post) == Post, "Incorrect type for result single item"
 
-    def test_get_all_fields(self):
-       post = post_dao.get_all()[0]
-       check_fields(post)
+    def test_get_all_fields(self, post_dao):
+        post = post_dao.get_all()[0]
+        check_fields(post)
 
     def test_get_all_correct_ids(self, post_dao):
         posts = post_dao.get_all()
@@ -41,17 +43,15 @@ class TestPostDAO:
 
     def test_get_by_pk_types(self, post_dao):
         post = post_dao.get_by_pk(1)
-        assert type(post) ==Post, "Incorrect type for result single item"
+        assert type(post) == Post, "Incorrect type for result single item"
 
     def test_get_by_pk_fields(self, post_dao):
-        post =post_dao.get_by_pk(1)
+        post = post_dao.get_by_pk(1)
         check_fields(post)
 
     def test_get_by_pk_none(self, post_dao):
-        post =post_dao.get_by_pk(777)
+        post = post_dao.get_by_pk(777)
         assert post is None, "Should be None"
-
-
 
     @pytest.mark.parametrize("pk", [1, 2, 3])
     def test_get_by_pk_correct_id(self, post_dao, pk):
@@ -85,7 +85,7 @@ class TestPostDAO:
         pks = set([post.pk for post in posts])
         assert pks == expected_pks, f"Incorrect result searching for {s}"
 
-    #Функция получение постов по имени автора
+    # Функция получение постов по имени автора
 
     def test_get_by_poster_type(self, post_dao):
         post = post_dao.get_by_poster("hank")[0]

@@ -34,7 +34,7 @@ def post_pk_page(pk):
     return render_template('post.html', post=post, comments=comments, comment_count=comment_count)
 
 #@post_blueprint.route('/search/', methods=['GET'])
-@main_blueprint.route('/search/', methods=['GET'])
+@main_blueprint.route('/search/')
 def search_page():
     '''Страница поиска по слову'''
     search_query = request.args.get('s')
