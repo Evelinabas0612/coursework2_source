@@ -21,6 +21,7 @@ def create_and_config_app(config_path):
 app = create_and_config_app("config.py")
 
 
+
 @app.errorhandler(404)
 def route_not_found(error):
     return f"Такой страницы нет {error}", 404
@@ -38,3 +39,4 @@ def internal_data_source_error(error):
 
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -38,7 +38,7 @@ def post_pk_page(pk):
 def search_page():
     '''Страница поиска по слову'''
     search_query = request.args.get('s')
-    logging.info('Выполняю поиск')
+    #logging.debug('Выполняю поиск')
     try:
         posts_tag = post_dao.search_in_content(search_query)
     except FileNotFoundError:
@@ -50,7 +50,7 @@ def search_page():
     return render_template('search.html', query=search_query, posts=posts_tag, count=posts_count)
 
 
-@main_blueprint.route('users/<username>/')
+@main_blueprint.route('/users/<username>/')
 def user_feed_page(username):
     '''Страница с постами пользователя'''
     try:
@@ -60,5 +60,5 @@ def user_feed_page(username):
         return 'Файл не найден'
     except JSONDecodeError:
         return 'Невалидный файл'
-    return render_template('user_feed.html', posts=posts, username=username)
+    return render_template('user-feed.html', posts=posts, username=username)
 
