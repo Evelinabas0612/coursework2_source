@@ -27,4 +27,14 @@ class Post:
             f"{self.likes_count}" \
             f")"
 
-
+    def as_dict(self):
+        dict_data = {
+            "pk": self.pk,
+            "poster_name": self.poster_name,
+            "poster_avatar": self.poster_avatar,
+            "pic": self.pic,
+            "content": self.content,
+            "views_count": self.views_count,
+            "likes_count": self.likes_count
+        }
+        return dict_data

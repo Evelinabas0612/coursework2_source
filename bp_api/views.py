@@ -4,7 +4,8 @@ import logging
 from bp_main.dao.comment_dao import CommentDAO
 from bp_main.dao.post_dao import PostDAO
 from config import POST_PATH, COMMENTS_PATH
-#from utils import get_posts_all, get_post_by_pk
+
+# from utils import get_posts_all, get_post_by_pk
 
 api_blueprint = Blueprint('api_blueprint', __name__)
 
@@ -17,13 +18,12 @@ api_logger = logging.getLogger("api_logger")
 @api_blueprint.route('/posts/')
 def api_all_posts_page():
     '''Эндпоинт.Возвращает все посты'''
-
     posts = post_dao.get_all()
     api_logger.debug('Загрузили все посты')
-    return jsonify(posts)
+    return jsonify([post.as_dict() for post in posts])
 
 
-@api_blueprint.route('/api/posts/<int:id>')
+@api_blueprint.route('/posts/<int:pk>')
 def api_posts_by_id_page(pk):
     '''Эндпоинт.Возвращает один пост'''
     post = post_dao.get_by_pk(pk)
@@ -31,7 +31,8 @@ def api_posts_by_id_page(pk):
     if post is None:
         api_logger.error(f"Обращение к несуществующему посту {pk}")
         abort(404)
-    return jsonify(post)
+    return jsonify(post.as_dict())
+
 
 @api_blueprint.errorhandler(404)
 def api_error_404(error):
